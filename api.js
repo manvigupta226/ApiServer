@@ -7,6 +7,7 @@ app.listen(3300, () => {
 });
 
 const bodyParser = require("body-parser");
+const { query } = require("express");
 app.use(bodyParser.json());
 
 client.connect();
@@ -32,17 +33,14 @@ app.get("/banks/:id", (req, res) => {
 });
 
 app.get("/branches", (req, res) => {
-  client.query(`Select * from branches`, (err, result) => {
-    if (!err) {
-      res.send(result.rows);
-    }
-  });
-  client.end;
-});
-
-app.get("/branches/:bank_id", (req, res) => {
+  let query = "Select * from branches";
+  if (req.query.bank_id) {
+    query = query + ` where bank_id='${req.query.bank_id}'`;
+  }
+  console.log(req, query);
   client.query(
-    `Select * from branches where bank_id=${req.params.bank_id}`,
+    query,
+
     (err, result) => {
       if (!err) {
         res.send(result.rows);
@@ -53,8 +51,11 @@ app.get("/branches/:bank_id", (req, res) => {
 });
 
 app.get("/branches/:ifsc", (req, res) => {
+  console.log("jj", req);
+
   client.query(
-    `Select * from branches where ifsc=${req.params.ifsc}`,
+    `Select * from branches where ifsc='${req.params.ifsc}'`,
+
     (err, result) => {
       if (!err) {
         res.send(result.rows);
