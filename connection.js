@@ -1,11 +1,11 @@
 const { Client } = require("pg");
 
 const client = new Client({
-  host: "localhost",
+  host: "containers-us-west-16.railway.app",
   user: "postgres",
-  port: 5432,
-  password: "12345678",
-  database: "BankData",
+  port: 7851,
+  password: "F9CXfrtNCJWuGjAeRbaL",
+  database: "railway",
 });
 
 module.exports = client;
